@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import zhCN from 'axxd/lib/locale-provider/zh_CN';
 import './App.css';
-import { Select } from 'axxd';
-const Option = Select.Option;
+import { LocaleProvider, DatePicker } from 'axxd';
+import 'moment/locale/zh-cn';
+import moment from 'moment';
+
+const RangePicker = DatePicker.RangePicker;
 
 class App extends Component {
 
-
+  onChange = (date, dateString) => {
+    console.log(date, dateString);
+  }
   render() {
     return (
       <div className="App">
@@ -17,13 +23,17 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <LocaleProvider locale={zhCN}>
+          {/* <RangePicker onChange={this.onChange} /> */}
 
-        <Select defaultValue="lucy" style={{ width: 120 }}>
-          <Option value="jack">Jack</Option>
-          <Option value="lucy">Lucy</Option>
-          <Option value="disabled" disabled>Disabled</Option>
-          <Option value="Yiminghe">yiminghe</Option>
-        </Select>
+          <RangePicker
+            showTime={{
+              hideDisabledOptions: true,
+              defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')],
+            }}
+            format="YYYY-MM-DD HH:mm:ss"
+          />
+        </LocaleProvider>
 
       </div>
     );
